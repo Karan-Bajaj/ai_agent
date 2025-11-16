@@ -1,0 +1,857 @@
+{
+	"info": {
+		"_postman_id": "ded9a1e4-5c1f-4f87-b588-4475ab4bee2b",
+		"name": "Meetstream Public",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11784748"
+	},
+	"item": [
+		{
+			"name": "api",
+			"item": [
+				{
+					"name": "v1",
+					"item": [
+						{
+							"name": "bots",
+							"item": [
+								{
+									"name": "create_bot",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Assign bot_id\", function () {\r",
+													"    var responseJson = pm.response.json();  // Parse JSON response\r",
+													"    \r",
+													"    pm.expect(responseJson).to.have.property(\"bot_id\");  // Ensure 'id' exists\r",
+													"    console.log(\"Bot id\", responseJson.bot_id);\r",
+													"    pm.environment.set(\"bot_id\", responseJson.bot_id);  // Set bot_id in environment\r",
+													"    pm.globals.set(\"bot_id\", responseJson.bot_id);  // Set bot_id globally (if nee\r",
+													"\r",
+													"    console.log(\"Transcript id\", responseJson.transcript_id);\r",
+													"    pm.environment.set(\"transcript_id\", responseJson.transcript_id);  // Set bot_iin environment\r",
+													"    pm.globals.set(\"transcript_id\", responseJson.transcript_id); \r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {},
+												"requests": {}
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Token {{api_key}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"meeting_link\": \"\",\r\n    \"bot_name\": \"Meestream's Agent\",\r\n    \"audio_required\": true,\r\n    \"bot_image_url\": \"https://images.pexels.com/photos/1458916/pexels-photo-1458916.jpeg\",\r\n    \"bot_message\": \"Hey Everyone 👋\",\r\n    \"callback_url\": \"\",\r\n    \"recording_config\": {\r\n        \"transcript\": {\r\n            \"provider\": {\r\n                \"assemblyai\": {\r\n                    \"model\": \"universal\",\r\n                    \"language\": \"en\"\r\n                }\r\n            }\r\n        }\r\n    },\r\n     \"automatic_leave\": {\r\n        \"waiting_room_timeout\": 300, //5mins \r\n        \"everyone_left_timeout\": 300, // 5mins\r\n        \"in_call_recording_timeout\": 14400, \r\n        \"recording_permission_denied_timeout\": 60 // only for zoom\r\n    }\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{URL}}/api/v1/bots/create_bot",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"bots",
+												"create_bot"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "create_bot (live_transcription)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Assign bot_id\", function () {\r",
+													"    var responseJson = pm.response.json();  // Parse JSON response\r",
+													"    \r",
+													"    pm.expect(responseJson).to.have.property(\"bot_id\");  // Ensure 'id' exists\r",
+													"    console.log(\"Bot id\", responseJson.bot_id);\r",
+													"    pm.environment.set(\"bot_id\", responseJson.bot_id);  // Set bot_id in environment\r",
+													"    pm.globals.set(\"bot_id\", responseJson.bot_id);  // Set bot_id globally (if nee\r",
+													"\r",
+													"    console.log(\"Transcript id\", responseJson.transcript_id);\r",
+													"    pm.environment.set(\"transcript_id\", responseJson.transcript_id);  // Set bot_iin environment\r",
+													"    pm.globals.set(\"transcript_id\", responseJson.transcript_id); \r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {},
+												"requests": {}
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Token {{api_key}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"meeting_link\": \"\",\r\n    \"bot_name\": \"Meestream's Agent\",\r\n    \"audio_required\": true,\r\n    \"bot_message\": \"Hey Everyone 👋\",\r\n    \"bot_image_url\": \"https://images.pexels.com/photos/1458916/pexels-photo-1458916.jpeg\",\r\n    \"live_transcription_required\": {\r\n        // \"webhook_url\": \"https://8e3dc8e5c96b.ngrok-free.app/webhook\"\r\n    },\r\n    \"callback_url\": \"\",\r\n    \"recording_config\": {\r\n        \"transcript\": {\r\n            \"provider\": {\r\n                \"assemblyai_streaming\": {\r\n                    \"model\": \"universal\",\r\n                    \"language\": \"en\"\r\n                }\r\n            }\r\n        }\r\n    },\r\n    \"automatic_leave\": {\r\n        \"waiting_room_timeout\": 300, //5mins \r\n        \"everyone_left_timeout\": 300, // 5mins\r\n        \"in_call_recording_timeout\": 14400, \r\n        \"recording_permission_denied_timeout\": 60 // only for zoom\r\n    }\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{URL}}/api/v1/bots/create_bot",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"bots",
+												"create_bot"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "create_bot Deepgram Transcription",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Assign bot_id\", function () {\r",
+													"    var responseJson = pm.response.json();  // Parse JSON response\r",
+													"    \r",
+													"    pm.expect(responseJson).to.have.property(\"bot_id\");  // Ensure 'id' exists\r",
+													"    console.log(\"Bot id\", responseJson.bot_id);\r",
+													"    pm.environment.set(\"bot_id\", responseJson.bot_id);  // Set bot_id in environment\r",
+													"    pm.globals.set(\"bot_id\", responseJson.bot_id);  // Set bot_id globally (if nee\r",
+													"\r",
+													"    console.log(\"Transcript id\", responseJson.transcript_id);\r",
+													"    pm.environment.set(\"transcript_id\", responseJson.transcript_id);  // Set bot_iin environment\r",
+													"    pm.globals.set(\"transcript_id\", responseJson.transcript_id); \r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {},
+												"requests": {}
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Token {{api_key}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"meeting_link\": \"\",\r\n    \"bot_name\": \"Meestream's Agent\",\r\n    \"audio_required\": true,\r\n    \"bot_message\": \"Hey Everyone 👋\",\r\n    \"bot_image_url\": \"https://images.pexels.com/photos/1458916/pexels-photo-1458916.jpeg\",\r\n    \"callback_url\": \"\",\r\n    \"recording_config\": {\r\n        \"transcript\": {\r\n            \"provider\": {\r\n                 \"deepgram\": {\r\n                    \"model\": \"nova-3\",\r\n                    \"language\": \"en\"\r\n                }\r\n            }\r\n        }\r\n    },\r\n    \"automatic_leave\": {\r\n        \"waiting_room_timeout\": 300, //5mins \r\n        \"everyone_left_timeout\": 300, // 5mins\r\n        \"in_call_recording_timeout\": 14400, \r\n        \"recording_permission_denied_timeout\": 60 // only for zoom\r\n    }\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{URL}}/api/v1/bots/create_bot",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"bots",
+												"create_bot"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create Agent",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(201);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Assign bot_id\", function () {\r",
+													"    var responseJson = pm.response.json();  // Parse JSON response\r",
+													"    \r",
+													"    pm.expect(responseJson).to.have.property(\"bot_id\");  // Ensure 'id' exists\r",
+													"    console.log(\"Bot id\", responseJson.bot_id);\r",
+													"    pm.environment.set(\"bot_id\", responseJson.bot_id);  // Set bot_id in environment\r",
+													"    pm.globals.set(\"bot_id\", responseJson.bot_id);  // Set bot_id globally (if nee\r",
+													"\r",
+													"    console.log(\"Transcript id\", responseJson.transcript_id);\r",
+													"    pm.environment.set(\"transcript_id\", responseJson.transcript_id);  // Set bot_iin environment\r",
+													"    pm.globals.set(\"transcript_id\", responseJson.transcript_id); \r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {},
+												"requests": {}
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Token {{api_key}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"meeting_link\": \"\",\r\n    \"bot_name\": \"Meestream's Agent\",\r\n    \"audio_required\": true,\r\n    \"bot_message\": \"Hey Everyone 👋\",\r\n    \"bot_image_url\": \"https://images.pexels.com/photos/1458916/pexels-photo-1458916.jpeg\",\r\n    \"callback_url\": \"\",\r\n    \"socket_connection_url\": {\r\n        // \"websocket_url\":\"wss://d137dc90f0a2.ngrok-free.app/bridge\"\r\n    },\r\n    \"live_audio_required\": {\r\n        // \"websocket_url\": \"wss://d137dc90f0a2.ngrok-free.app/bridge/audio\"\r\n    },\r\n    \"recording_config\": {\r\n        \"transcript\": {\r\n            \"provider\": {\r\n                \"assemblyai\": {\r\n                    \"model\": \"universal\",\r\n                    \"language\": \"en\"\r\n                }\r\n            }\r\n        }\r\n    },\r\n    \"automatic_leave\": {\r\n        \"waiting_room_timeout\": 300, //5mins \r\n        \"everyone_left_timeout\": 300, // 5mins\r\n        \"in_call_recording_timeout\": 14400, \r\n        \"recording_permission_denied_timeout\": 60 // only for zoom\r\n    }\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{URL}}/api/v1/bots/create_bot",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"bots",
+												"create_bot"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "{bot_id}/status",
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Token {{api_key}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{URL}}/api/v1/bots/{{bot_id}}/status",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"bots",
+												"{{bot_id}}",
+												"status"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "{bot_id}/bot_details",
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Token {{api_key}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{URL}}/api/v1/bots/{{bot_id}}/detail",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"bots",
+												"{{bot_id}}",
+												"detail"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "{bot_id}/get_audio",
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Token {{api_key}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{URL}}/api/v1/bots/{{bot_id}}/get_audio",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"bots",
+												"{{bot_id}}",
+												"get_audio"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "{bot_id}/get_video",
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Token {{api_key}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{URL}}/api/v1/bots/{{bot_id}}/get_video",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"bots",
+												"{{bot_id}}",
+												"get_video"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "{bot_id}/get_transcript",
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Token {{api_key}}",
+												"type": "text"
+											},
+											{
+												"key": "Authorization",
+												"value": "Token ms_yabgRcV60a6TtZq49ZSYSj91aS9hBFSb",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"url": {
+											"raw": "{{URL}}/api/v1/transcript/{{transcript_id}}/get_transcript",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"transcript",
+												"{{transcript_id}}",
+												"get_transcript"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "{bot_id}/remove_bot",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Response status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"\r",
+													"pm.test(\"Response has the required fields - success, message\", function () {\r",
+													"    const responseData = pm.response.json();\r",
+													"    \r",
+													"    pm.expect(responseData).to.be.an('object');\r",
+													"    pm.expect(responseData.success).to.exist;\r",
+													"    pm.expect(responseData.message).to.exist;\r",
+													"});\r",
+													"\r",
+													"\r",
+													"// pm.test(\"Response time is less than 500ms\", function () {\r",
+													"//   pm.expect(pm.response.responseTime).to.be.below(500);\r",
+													"// });\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {},
+												"requests": {}
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Token {{api_key}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{URL}}/api/v1/bots/{{bot_id}}/remove_bot",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"bots",
+												"{{bot_id}}",
+												"remove_bot"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "speaker_timeline",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Token {{api_key}} ",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{URL}}/api/v1/bots/{{bot_id}}/get_speaker_timeline",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"bots",
+												"{{bot_id}}",
+												"get_speaker_timeline"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "get chats",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Token {{api_key}} ",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{URL}}/api/v1/bots/{{bot_id}}/get_chats",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"bots",
+												"{{bot_id}}",
+												"get_chats"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "get screenshots",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Token {{api_key}} ",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{URL}}/api/v1/bots/{{bot_id}}/get_screenshots",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"bots",
+												"{{bot_id}}",
+												"get_screenshots"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "fetch particiapants",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Token ms_yabgRcV60a6TtZq49ZSYSj91aS9hBFSb",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{URL}}/api/v1/bots/{{bot_id}}/get_participants",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"bots",
+												"{{bot_id}}",
+												"get_participants"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "delete data",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Token {{api_key}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"meeting_link\":\r\n    // \"https://us05web.zoom.us/j/2888187091?pwd=2R8FfKbNMZVISsLUW3ARhPfD0Qi8xJ.1\",\r\n    // \"https://teams.live.com/meet/9313495207486?p=HBQW7BlplFfyoQqztI\",\r\n    \"https://meet.google.com/zcs-xwyv-hvi\",\r\n    \"bot_name\": \"Maddy's Agent\",\r\n    \"video_required\": true,\r\n    \"audio_required\": true,\r\n    \"bot_message\": \"Hey Everyone 👋\",\r\n    \"bot_image_url\": \"https://images.pexels.com/photos/1458916/pexels-photo-1458916.jpeg\",\r\n    \"socket_connection_url\": {\r\n        // \"websocket_url\":\"\"\r\n    },\r\n    \"live_audio_required\": {\r\n        // \"websocket_url\": \"wss://7809208b0a88.ngrok-free.app/liveAudioChunks\"\r\n    },\r\n    \"live_transcription_required\": {\r\n        // \"webhook_url\": \"https://cb8aeb42b2c0.ngrok-free.app/webhook\"\r\n    },\r\n    \"transcription\": {\r\n        \"deepgram\": {\r\n            \"model\": \"nova-3\",\r\n            \"language\": \"en\"\r\n        }\r\n        // \"assemblyai\":{\r\n        //     \"model\":\"universal\",\r\n        //     \"language\":\"en\"\r\n        // }\r\n    },\r\n    \"custom_attributes\": {\r\n        \"tag\": \"Maddy\",\r\n        \"sample\": \"testing\"\r\n    },\r\n    // \"join_at\":\"2025-10-02T15:30:00+05:30\",\r\n    \"callback_url\": \"\",\r\n    \"recording_config\": {\r\n        \"realtime_endpoints\": [\r\n            {\r\n                \"type\": \"webhook\",\r\n                \"url\": \"https://c0f9dce0a66f.ngrok-free.app/webhook\",\r\n                \"events\": [\r\n                    \"participant_events.join\",\r\n                    \"participant_events.leave\"\r\n                ]\r\n            }\r\n        ]\r\n    },\r\n    \"automatic_leave\": {\r\n        \"waiting_room_timeout\": 300,\r\n        \"everyone_left_timeout\": 300, // 5mins\r\n        \"in_call_recording_timeout\": 1800, // 30 mins\r\n        \"recording_permission_denied_timeout\": 60 // only for zoom\r\n    }\r\n}\r\n// {\"bot_id\":\"Botty-1201\",\"user_id\":\"e4f87428-50f1-70a5-08de-cabf0adf6986\",\"platform\":\"GMeet\",\"meeting_link\":\"https://meet.google.com/zcs-xwyv-hvi\",\"bot_name\":\"Maddy's Agent\",\"bot_image_url\":\"https://images.pexels.com/photos/1458916/pexels-photo-1458916.jpeg\",\"bot_message\":\"Hey Everyone 👋\",\"zoom_client_id\":\"M4rR7syrQle52ZZIlT9wTg\",\"zoom_client_secret\":\"dIPdhUuphHRa9FUO6KsLFjjdt5Qk6Lwu\",\"live_audio_required\":{},\"live_transcription_required\":{},\"transcription\":{\"transcript_id\":\"aa6e41aa-a21b-45ff-8f4d-40226c9eaea8\",\"provider\":\"deepgram\",\"api_key\":\"7635aef6fcc478506b75d6e63efdaf286a9d01c7\",\"model\":\"nova-3\",\"language\":\"en\"},\"audio_required\":true,\"video_required\":true,\"start_time\":\"2025-10-02T08:21:25Z\",\"automatic_leave\":{\"waiting_room_timeout\":300,\"noone_joined_timeout\":300,\"everyone_left_timeout\":300,\"in_call_recording_timeout\":1800,\"recording_permission_denied_timeout\":60}}\r\n// {\"action\": \"stop_bot\", \"bot_id\": \"Botty-571\", \"platform\": \"GMeet\"}"
+										},
+										"url": {
+											"raw": "{{URL}}/api/v1/bots/{{bot_id}}/delete_data",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"bots",
+												"{{bot_id}}",
+												"delete_data"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "reschedule bot Copy",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {},
+												"requests": {}
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Token {{api_key}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"scheduled_join_time\":\"2025-11-09T16:00:00+05:30\"\r\n}\r\n\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{URL}}/api/v1/calendar/scheduled_bots/{{bot_id}}",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"calendar",
+												"scheduled_bots",
+												"{{bot_id}}"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "transcription",
+							"item": [
+								{
+									"name": "getTranscription",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Token {{api_key}} ",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{URL}}/api/v1/transcript/{{transcript_id}}/get_transcript",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"transcript",
+												"{{transcript_id}}",
+												"get_transcript"
+											],
+											"query": [
+												{
+													"key": "",
+													"value": "",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "getRawTranscription",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Token {{api_key}} ",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{URL}}/api/v1/transcript/{{transcript_id}}/get_transcript?raw=True",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"transcript",
+												"{{transcript_id}}",
+												"get_transcript"
+											],
+											"query": [
+												{
+													"key": "raw",
+													"value": "True"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Calendar",
+							"item": [
+								{
+									"name": "Create Calendar",
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{admin_key}}",
+												"type": "text",
+												"disabled": true
+											},
+											{
+												"key": "Authorization",
+												"value": "Token {{api_key}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"google_client_id\": \"\",\n    \"google_client_secret\": \"\",\n    \"google_refresh_token\": \"\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{URL}}/api/v1/calendar/create_calendar",
+											"host": [
+												"{{URL}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"calendar",
+												"create_calendar"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "URL",
+			"value": "https://api.meetstream.ai"
+		},
+		{
+			"key": "api_key",
+			"value": ""
+		}
+	]
+}

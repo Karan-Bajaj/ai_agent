@@ -1,0 +1,171 @@
+{
+	"info": {
+		"_postman_id": "3945f65f-15ec-4a3f-8670-7a8b357a9b44",
+		"name": "karan",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "create_bot Deepgram Transcription",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Assign bot_id\", function () {\r",
+							"    var responseJson = pm.response.json();  // Parse JSON response\r",
+							"    \r",
+							"    pm.expect(responseJson).to.have.property(\"bot_id\");  // Ensure 'id' exists\r",
+							"    console.log(\"Bot id\", responseJson.bot_id);\r",
+							"    pm.environment.set(\"bot_id\", responseJson.bot_id);  // Set bot_id in environment\r",
+							"    pm.globals.set(\"bot_id\", responseJson.bot_id);  // Set bot_id globally (if nee\r",
+							"\r",
+							"    console.log(\"Transcript id\", responseJson.transcript_id);\r",
+							"    pm.environment.set(\"transcript_id\", responseJson.transcript_id);  // Set bot_iin environment\r",
+							"    pm.globals.set(\"transcript_id\", responseJson.transcript_id); \r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token {{api_key}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"meeting_link\": \"https://meet.google.com/roj-wahq-yjt\",\r\n    \"bot_name\": \"Meestream's Agent\",\r\n    \"audio_required\": true,\r\n    \"bot_message\": \"Hey Everyone 👋\",\r\n    \"bot_image_url\": \"https://images.pexels.com/photos/1458916/pexels-photo-1458916.jpeg\",\r\n    \"callback_url\": \"\",\r\n    \"recording_config\": {\r\n        \"transcript\": {\r\n            \"provider\": {\r\n                 \"deepgram\": {\r\n                    \"model\": \"nova-3\",\r\n                    \"language\": \"en\"\r\n                }\r\n            }\r\n        }\r\n    },\r\n    \"automatic_leave\": {\r\n        \"waiting_room_timeout\": 300, //5mins \r\n        \"everyone_left_timeout\": 300, // 5mins\r\n        \"in_call_recording_timeout\": 14400, \r\n        \"recording_permission_denied_timeout\": 60 // only for zoom\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/v1/bots/create_bot",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"bots",
+						"create_bot"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{bot_id}/get_audio",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token {{api_key}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/v1/bots/{{bot_id}}/get_audio",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"bots",
+						"{{bot_id}}",
+						"get_audio"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{bot_id}/get_transcript",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token {{api_key}}",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Token ms_yabgRcV60a6TtZq49ZSYSj91aS9hBFSb",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/api/v1/transcript/{{transcript_id}}/get_transcript",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"transcript",
+						"{{transcript_id}}",
+						"get_transcript"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "api_key",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "URL",
+			"value": "",
+			"type": "default"
+		}
+	]
+}
